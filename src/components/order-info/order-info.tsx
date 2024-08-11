@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from '../../services/store';
 import { ingredientsSelector } from '../../services/ingredients/slice';
 import { getOrderByNum } from '../../services/order/action';
 import { useParams } from 'react-router-dom';
-import { ordersSelector } from '../../services/order/slice';
+import { orderModalSelector, ordersSelector } from '../../services/order/slice';
 
 export const OrderInfo: FC = () => {
   /** TODO: взять переменные orderData и ingredients из стора */
@@ -15,6 +15,7 @@ export const OrderInfo: FC = () => {
   const number = Number(param.number);
   const [orderData, setOrderData] = useState<TOrder | null>(null);
   const ingredients: TIngredient[] = useSelector(ingredientsSelector);
+  const modalData = useSelector(orderModalSelector);
   const data = useSelector(ordersSelector);
   useEffect(() => {
     if (number) {
@@ -29,6 +30,12 @@ export const OrderInfo: FC = () => {
       }
     }
   }, [dispatch, number]);
+
+  useEffect(() => {
+    if (modalData && modalData.number === number) {
+      setOrderData(modalData);
+    }
+  }, [modalData, number]);
 
   const orderInfo = useMemo(() => {
     if (!orderData || !ingredients.length) return null;

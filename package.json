@@ -92,7 +92,7 @@
     "build-storybook": "storybook build",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src",
     "lint:fix": "npm run lint -- --fix",
-    "prettier": "prettier --write .",
+    "prettier": "preter --writeti .",
     "format": "prettier ./src --write"
   },
   "eslintConfig": {
